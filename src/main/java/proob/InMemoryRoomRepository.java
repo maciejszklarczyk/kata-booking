@@ -26,6 +26,17 @@ public class InMemoryRoomRepository implements RoomRepository {
     }
 
     @Override
+    public Set<Room> getBookedRooms() {
+        Set<Room> bookedRooms = new HashSet<>();
+        for(Room single:Rooms){
+            if(!single.getIsFree()){
+                bookedRooms.add(single);
+            }
+        }
+        return bookedRooms;
+    }
+
+    @Override
     public void bookRoom(Room room,Person customer) {
         room.setBookedBy(customer);
     }
@@ -37,5 +48,32 @@ public class InMemoryRoomRepository implements RoomRepository {
         } else {
             return room.getBookedBy();
         }
+    }
+
+    @Override
+    public Room getBookedRoomByPerson(Person person) {
+        Set<Room> bookedRooms = getBookedRooms();
+        Room room = new Room();
+        for(Room single:bookedRooms){
+            if(single.getBookedBy() == person){
+                room = single;
+            } else {
+                room = null;
+            }
+        }
+        return room;
+    }
+
+    @Override
+    public void freeTheRoom(Room room) {
+        room.setBookedBy(null);
+        room.setIsFree(true);
+
+    }
+
+    @Override
+    public void cancelBooking(Room room,Person person) {
+        freeTheRoom(room);
+
     }
 }

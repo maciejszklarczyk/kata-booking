@@ -10,17 +10,25 @@ public class Hotel {
     public Hotel(RoomRepository roomRepository) {
         this.roomRepository = roomRepository;
     }
-    public void getFreeRooms(){
-        this.freeRooms=roomRepository.getFreeRooms();
+
+    public void getFreeRooms() {
+        this.freeRooms = roomRepository.getFreeRooms();
     }
-    public Room getSingleFreeRoom(){
+
+    public Room getSingleFreeRoom() {
         getFreeRooms();
         return freeRooms.iterator().next();
     }
-    public void bookRoom(Person person, Room room){
-        roomRepository.bookRoom(room,person);
+
+    public void bookRoom(Person person, Room room) {
+        roomRepository.bookRoom(room, person);
     }
-    public RoomRepository getRoomRepository(){
+
+    public void cancelBooking(Person person, Room room) {
+        roomRepository.cancelBooking(room, person);
+    }
+
+    public RoomRepository getRoomRepository() {
         return this.roomRepository;
     }
 

@@ -4,7 +4,6 @@ import cucumber.api.PendingException
 import groovy.transform.Field
 
 
-
 this.metaClass.mixin(cucumber.api.groovy.Hooks)
 this.metaClass.mixin(cucumber.api.groovy.EN)
 
@@ -26,7 +25,7 @@ Given(~/^there is a free room$/) { ->
 When(~/^person A books it$/) { ->
     person = new Person();
     room = hotel.getSingleFreeRoom();
-    hotel.bookRoom(person,room);
+    hotel.bookRoom(person, room);
 
 }
 Then(~/^it is booked by person a$/) { ->
@@ -34,4 +33,15 @@ Then(~/^it is booked by person a$/) { ->
 }
 And(~/^it can no longer be booked$/) { ->
     room.getIsFree();
+}
+
+
+Given(~/^person A has a booking$/) { ->
+    room = roomRepository.getBookedRoomByPerson(person);
+}
+When(~/^he cancels his booking$/) { ->
+    hotel.cancelBooking(person,room);
+}
+Then(~/^the room becomes free$/) { ->
+    roomRepository.freeTheRoom(room);
 }
