@@ -18,7 +18,7 @@ public class InMemoryRoomRepository implements RoomRepository {
     public Set<Room> getFreeRooms() {
         Set<Room> freeRooms = new HashSet<>();
         for(Room single:Rooms){
-            if(single.getFree()){
+            if(single.getIsFree()){
                 freeRooms.add(single);
             }
         }
@@ -32,7 +32,7 @@ public class InMemoryRoomRepository implements RoomRepository {
 
     @Override
     public Person whoBooked(Room room) {
-        if(room.getFree()){
+        if(room.getIsFree()){
             return null;
         } else {
             return room.getBookedBy();

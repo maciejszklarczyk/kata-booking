@@ -1,4 +1,7 @@
-Feature: Book free room
+Feature: Hotel
+  Background:
+    Given there is a hotel
+
   Scenario: Book free room
     Given there is a free room
     When person A books it

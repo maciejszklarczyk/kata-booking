@@ -12,14 +12,16 @@ public class Room {
         isFree = true;
     }
 
-    public boolean getFree(){
+    public boolean getIsFree() {
         return this.isFree;
     }
-    public void setBookedBy(Person customer){
+
+    public void setBookedBy(Person customer) {
         this.bookedBy = customer;
         this.isFree = false;
     }
-    public Person getBookedBy(){
+
+    public Person getBookedBy() {
         return this.bookedBy;
     }
 }
