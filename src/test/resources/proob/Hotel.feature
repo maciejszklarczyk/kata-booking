@@ -19,12 +19,12 @@ Feature: Hotel
     When the list of bookings is displayed
     Then each room points to a person booking it or is it available
 
-#  Scenario: Hold booking
-#    Given person a owes person b 99$
-#    And person b owes person c 41$
-#    When person a borrows person c 30$
-#    Then person a owes person b 69$
-#    And person b owes person c 11$
+  Scenario: Hold booking
+    Given person a owes person b 99$
+    And person b owes person c 41$
+    When person a borrows person c 30$
+    Then person a owes person b 69$
+    And person b owes person c 11$
 
   Scenario: Print booking history for a room
     Given multiple people booked the same room

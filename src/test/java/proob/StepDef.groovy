@@ -60,28 +60,6 @@ Then(~/^each room points to a person booking it or is it available$/) { ->
     room.toString();
 }
 
-//scenario 4
-//Given(~/^person a owes person b (\d+)\$$/) { int arg1 ->
-//    // Write code here that turns the phrase above into concrete actions
-//    throw new PendingException()
-//}
-//And(~/^person b owes person c (\d+)\$$/) { int arg1 ->
-//    // Write code here that turns the phrase above into concrete actions
-//    throw new PendingException()
-//}
-//When(~/^person a borrows person c (\d+)\$$/) { int arg1 ->
-//    // Write code here that turns the phrase above into concrete actions
-//    throw new PendingException()
-//}
-//Then(~/^person a owes person b (\d+)\$$/) { int arg1 ->
-//    // Write code here that turns the phrase above into concrete actions
-//    throw new PendingException()
-//}
-//And(~/^person b owes person c (\d+)\$$/) { int arg1 ->
-//    // Write code here that turns the phrase above into concrete actions
-//    throw new PendingException()
-//}
-
 //scenario 5
 Given(~/^multiple people booked the same room$/) { ->
     room = new Room();
@@ -93,4 +71,21 @@ When(~/^a booking history is printed$/) { ->
 Then(~/^the list of historical bookings display name of people booking and time the booking was made or canceled$/) { ->
     hotel.roomRepository.showRoomHistory(roomHistory);
 
+}
+//scenario 4
+Given(~/^person a owes person b (\d+)\$$/) { int arg1 ->
+    Person personA = new Person();
+    Person personB = new Person();
+    personA.addDept(personB,arg1);
+}
+
+And(~/^person b owes person c (\d+)\$$/) { int arg1 ->
+    Person personB = new Person();
+    Person personC = new Person();
+    personB.addDept(personC,arg1);
+}
+When(~/^person a borrows person c (\d+)\$$/) { int arg1 ->
+    Person personA = new Person();
+    Person personC = new Person();
+    personA.borrow(personC,arg1);
 }

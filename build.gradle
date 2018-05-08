@@ -1,5 +1,6 @@
 apply plugin: "groovy"
 apply plugin: "java"
+apply plugin: "jacoco"
 
 repositories { mavenCentral() }
 
@@ -29,6 +30,14 @@ task cucumber() {
                     'src/test/resources'
             ]
         }
+    }
+    finalizedBy jacocoTestReport
+}
+jacocoTestReport {
+    reports {
+        xml.enabled true
+        html.enabled false
+        xml.destination "/jacoco"
     }
 }
 

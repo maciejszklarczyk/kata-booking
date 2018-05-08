@@ -4,7 +4,8 @@ jdk:
 before_script:
   - chmod +x gradlew
 script:
-  - ./gradlew check
+  - ./gradlew check --stacktrace --info
   - ./gradlew cucumber
+  - ./gradlew jacocoTestReport
 after_success:
   - bash <(curl -s https://codecov.io/bash)
