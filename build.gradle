@@ -1,51 +1,38 @@
-apply plugin: "java"
-apply plugin: "com.github.samueltbrown.cucumber"
-apply plugin: "jacoco"
-
-repositories {
-    jcenter()
-}
+apply plugin: 'java'
+apply plugin: 'jacoco'
 
 dependencies {
-    testCompile "junit:junit-dep:4.11"
-    testCompile "info.cukes:cucumber-java:1.1.7"
-}
-
-testResultsDirName = "results/test"
-
-test {
-    jacoco {
-        append = false
-        destinationFile = file("$buildDir/results/jacoco/test.exec")
-    }
-}
-
-cucumber {
-    formats = [ "pretty", "html:build/reports/cucumber", "json:build/results/cucumber/cucumber.json" ]
-    glueDirs = [ "src/cucmber/java" ]
-    featureDirs = [ "src/cucumber/resources" ]
-    jvmOptions {
-        def jacocoAgent = zipTree(configurations.jacocoAgent.singleFile).filter { it.name == "jacocoagent.jar" }.singleFile
-        jvmArgs = ["-javaagent:$jacocoAgent=destfile=$buildDir/results/jacoco/cucumber.exec,append=false"]
-    }
+    compile group: 'com.google.inject', name: 'guice', version: '4.2.0'
+    compile group: 'com.google.inject.extensions', name: 'guice-assistedinject', version: '4.2.0'
+    testCompile 'io.cucumber:cucumber-java8:2.4.0'
+    testCompile 'io.cucumber:cucumber-junit:2.4.0'
+    testCompile group: 'org.assertj', name: 'assertj-core', version: '3.9.1'
 }
 
 jacocoTestReport {
-    executionData = files("$buildDir/results/jacoco/test.exec", "$buildDir/results/jacoco/cucumber.exec")
     reports {
-        xml.enabled false
-        csv.enabled false
-        html.destination "$buildDir/reports/jacoco"
+        xml.enabled true
+        html.enabled false
     }
-    dependsOn test
-    dependsOn "cucumber"
 }
 
-buildscript {
-    repositories {
-        jcenter()
+configurations {
+    cucumberRuntime {
+        extendsFrom testRuntime
     }
-    dependencies {
-        classpath "com.github.samueltbrown:gradle-cucumber-plugin:0.8"
+}
+
+task cucumber() {
+    dependsOn assemble, compileTestJava
+    doLast {
+        javaexec {
+            main = "cucumber.api.cli.Main"
+            classpath = configurations.cucumberRuntime + sourceSets.main.output + sourceSets.test.output
+            args = ['--plugin', 'pretty', '--glue', 'proob', 'src/cucumber/resources']
+        }
     }
+}
+
+repositories {
+    mavenCentral()
 }
