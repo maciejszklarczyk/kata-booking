@@ -13,7 +13,7 @@ public class Hotel {
     }
 
     public void getFreeRooms() {
-        this.freeRooms = roomRepository.getFreeRooms();
+        this.freeRooms = this.roomRepository.getFreeRooms();
     }
 
     public Room getSingleFreeRoom() {
@@ -37,7 +37,7 @@ public class Hotel {
         this.allRooms = roomRepository.getRooms();
     }
 
-    public Set<Room> getAllRooms(){
+    public Set<Room> getAllRooms() {
         return this.allRooms;
     }
 
