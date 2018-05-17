@@ -26,6 +26,7 @@ public class StepDefs {
         hotel = new Hotel(roomRepository);
     }
 
+
     //scenario 1
     @Given("^there is a free room$")
     public void thereIsAFreeRoom() throws Throwable {
@@ -42,7 +43,7 @@ public class StepDefs {
     @Then("^it is booked by person a$")
     public void itIsBookedByPersonA() throws Throwable {
         Room room = roomRepository.getBookedRoomByPerson(personA);
-        hotel.getRoomRepository().whoBooked(room);
+        Person whoBooked = hotel.getRoomRepository().whoBooked(room);
     }
 
     @And("^it can no longer be booked$")
@@ -50,10 +51,12 @@ public class StepDefs {
 //        room.getIsFree();
     }
 
+
     //scenario 2
     @Given("^person A has a booking$")
     public void personAHasABooking() throws Throwable {
         Room room = roomRepository.getBookedRoomByPerson(personA);
+        assertNotNull(room);
     }
 
     @When("^he cancels his booking$")
@@ -67,39 +70,8 @@ public class StepDefs {
 //        roomRepository.freeTheRoom(room);
     }
 
-    @Given("^there are a list of free rooms with some bookings made$")
-    public void thereAreAListOfFreeRoomsWithSomeBookingsMade() throws Throwable {
-        Set<Room> rooms = hotel.getAllRooms();
-    }
 
-    @When("^the list of bookings is displayed$")
-    public void theListOfBookingsIsDisplayed() throws Throwable {
-//        roomRepository.listAllFromSet(rooms);
-    }
-
-    @Then("^each room points to a person booking it or is it available$")
-    public void eachRoomPointsToAPersonBookingItOrIsItAvailable() throws Throwable {
-//        room.toString();
-    }
-
-    @Given("^multiple people booked the same room$")
-    public void multiplePeopleBookedTheSameRoom() throws Throwable {
-        Room room = new Room();
-        LinkedList<BookHistory>  roomHistory = hotel.getRoomRepository().getRoomHistory(room);
-    }
-
-    @When("^a booking history is printed$")
-    public void aBookingHistoryIsPrinted() throws Throwable {
-        Room room = new Room();
-        LinkedList<BookHistory>  roomHistory = hotel.getRoomRepository().getRoomHistory(room);
-        hotel.getRoomRepository().showRoomHistory(roomHistory);
-    }
-
-    @Then("^the list of historical bookings display name of people booking and time the booking was made or canceled$")
-    public void theListOfHistoricalBookingsDisplayNameOfPeopleBookingAndTimeTheBookingWasMadeOrCanceled() throws Throwable {
-//        hotel.roomRepository.showRoomHistory(roomHistory);
-    }
-
+    //scenario 3
     @Given("^person a owes person b (\\d+)$")
     public void personAOwesPersonB$(int arg0) throws Throwable {
         Person personA = new Person();
@@ -119,6 +91,43 @@ public class StepDefs {
         Person personA = new Person();
         Person personC = new Person();
         personA.borrow(personC, arg0);
+    }
+
+
+    //scenario 4
+    @Given("^there are a list of free rooms with some bookings made$")
+    public void thereAreAListOfFreeRoomsWithSomeBookingsMade() throws Throwable {
+        Set<Room> rooms = hotel.getAllRooms();
+    }
+
+    @When("^the list of bookings is displayed$")
+    public void theListOfBookingsIsDisplayed() throws Throwable {
+//        roomRepository.listAllFromSet(rooms);
+    }
+
+    @Then("^each room points to a person booking it or is it available$")
+    public void eachRoomPointsToAPersonBookingItOrIsItAvailable() throws Throwable {
+//        room.toString();
+    }
+
+
+    //scenario 5
+    @Given("^multiple people booked the same room$")
+    public void multiplePeopleBookedTheSameRoom() throws Throwable {
+        Room room = new Room();
+        LinkedList<BookHistory>  roomHistory = hotel.getRoomRepository().getRoomHistory(room);
+    }
+
+    @When("^a booking history is printed$")
+    public void aBookingHistoryIsPrinted() throws Throwable {
+        Room room = new Room();
+        LinkedList<BookHistory>  roomHistory = hotel.getRoomRepository().getRoomHistory(room);
+        hotel.getRoomRepository().showRoomHistory(roomHistory);
+    }
+
+    @Then("^the list of historical bookings display name of people booking and time the booking was made or canceled$")
+    public void theListOfHistoricalBookingsDisplayNameOfPeopleBookingAndTimeTheBookingWasMadeOrCanceled() throws Throwable {
+//        hotel.roomRepository.showRoomHistory(roomHistory);
     }
 }
 

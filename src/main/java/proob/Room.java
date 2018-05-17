@@ -29,9 +29,9 @@ public class Room {
     }
 
     public void setBookedBy(Person customer) {
-        this.bookedBy = customer;
         setIsFree(false);
 
+        this.bookedBy = customer;
         BookHistory bookHistoryObject = new BookHistory(customer);
 
         this.history.add(bookHistoryObject);
