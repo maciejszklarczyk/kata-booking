@@ -102,12 +102,17 @@ public class StepDefs {
 
     @When("^the list of bookings is displayed$")
     public void theListOfBookingsIsDisplayed() throws Throwable {
-//        roomRepository.listAllFromSet(rooms);
+        Set<Room> rooms = hotel.getAllRooms();
+        roomRepository.listAllFromSet(rooms);
     }
 
     @Then("^each room points to a person booking it or is it available$")
     public void eachRoomPointsToAPersonBookingItOrIsItAvailable() throws Throwable {
-//        room.toString();
+        Set<Room> rooms = hotel.getAllRooms();
+        hotel.getRoomRepository().listAllFromSet(rooms);
+        for (Room room : rooms) {
+            System.out.println(room);
+        }
     }
 
 
@@ -115,13 +120,13 @@ public class StepDefs {
     @Given("^multiple people booked the same room$")
     public void multiplePeopleBookedTheSameRoom() throws Throwable {
         Room room = new Room();
-        LinkedList<BookHistory>  roomHistory = hotel.getRoomRepository().getRoomHistory(room);
+        LinkedList<BookHistory> roomHistory = hotel.getRoomRepository().getRoomHistory(room);
     }
 
     @When("^a booking history is printed$")
     public void aBookingHistoryIsPrinted() throws Throwable {
         Room room = new Room();
-        LinkedList<BookHistory>  roomHistory = hotel.getRoomRepository().getRoomHistory(room);
+        LinkedList<BookHistory> roomHistory = hotel.getRoomRepository().getRoomHistory(room);
         hotel.getRoomRepository().showRoomHistory(roomHistory);
     }
 

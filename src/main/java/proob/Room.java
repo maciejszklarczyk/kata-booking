@@ -17,7 +17,7 @@ public class Room {
     }
 
     public UUID getId() {
-        return id;
+        return this.id;
     }
 
     public boolean getIsFree() {

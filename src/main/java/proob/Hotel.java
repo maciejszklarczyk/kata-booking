@@ -5,8 +5,8 @@ import java.util.Set;
 
 public class Hotel {
     private final RoomRepository roomRepository;
-    Set<Room> freeRooms = new HashSet<>();
-    Set<Room> allRooms = new HashSet<>();
+    private Set<Room> freeRooms = new HashSet<>();
+    private Set<Room> allRooms = new HashSet<>();
 
     public Hotel(RoomRepository roomRepository) {
         this.roomRepository = roomRepository;
@@ -34,7 +34,7 @@ public class Hotel {
     }
 
     public void setAllRooms() {
-        this.allRooms = roomRepository.getRooms();
+        this.allRooms = this.roomRepository.getRooms();
     }
 
     public Set<Room> getAllRooms() {
