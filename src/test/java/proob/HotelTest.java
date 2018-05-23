@@ -3,8 +3,12 @@ package proob;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import static org.junit.Assert.*;
 
@@ -40,7 +44,7 @@ public class HotelTest {
      */
 
     @Test
-    public void lockingRoomForBooking(){
+    public void lockingRoomForBooking() {
         Room freeRoom = hotel.getSingleFreeRoom();
         Person personA = new Person();
         freeRoom.setBookedBy(personA);
@@ -56,15 +60,26 @@ public class HotelTest {
      */
 
     @Test
-    public void relasingBookingLockIfNoBookingMade(){
+    public void relasingBookingLockIfNoBookingMade() {
         Room freeRoom = hotel.getSingleFreeRoom();
         Person personA = new Person();
         freeRoom.setBookedBy(personA);
-
         //ten minutes check
-
-        if(!freeRoom.getIsFree() && freeRoom.getBookedBy() == null){
-            freeRoom.setIsFree(true);
+        Timer timer;
+        timer = new Timer();
+        class RemindTask extends TimerTask {
+            public void run() {
+                if (!freeRoom.getIsFree() && freeRoom.getBookedBy() == null) {
+                    freeRoom.setIsFree(true);
+                }
+                timer.cancel();
+            }
+        }
+        timer.schedule(new RemindTask(), 600000);
+        if(freeRoom.getBookedBy() != null){
+            assertFalse(freeRoom.getIsFree());
+        } else {
+            assertTrue(freeRoom.getIsFree());
         }
     }
 }
